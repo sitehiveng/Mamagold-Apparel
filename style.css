@@ -1,0 +1,470 @@
+/* ==========================================================================
+   MAMAGOLD APPAREL — Design Tokens
+   Color:  charcoal #14120F / #1D1A15, ivory #F7F3EC / #EFE8D8,
+           gold #C9A344, gold-light #E4C468, gold-deep #9C7B2A
+   Type:   Fraunces (display, italic accents) + Manrope (body/UI)
+   Motif:  "gold thread" hairline that stitches sections together
+   ========================================================================== */
+
+:root{
+  --mg-black:#14120F;
+  --mg-black-2:#1D1A15;
+  --mg-black-3:#252019;
+  --mg-ivory:#F7F3EC;
+  --mg-ivory-2:#EFE8D8;
+  --mg-gold:#C9A344;
+  --mg-gold-light:#E4C468;
+  --mg-gold-deep:#9C7B2A;
+  --mg-line: rgba(201,163,68,0.35);
+  --mg-text-muted: rgba(247,243,236,0.68);
+  --mg-radius: 2px;
+  --mg-ease: cubic-bezier(.22,.61,.36,1);
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--mg-ivory);
+  color:var(--mg-black);
+  font-family:'Manrope', sans-serif;
+  font-weight:400;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{
+  font-family:'Fraunces', serif;
+  margin:0;
+  color:inherit;
+}
+p{margin:0;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+::selection{background:var(--mg-gold); color:var(--mg-black);}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+}
+
+/* ---------------- Loader (auto-hides via CSS regardless of JS) ---------------- */
+#mg-loader{
+  position:fixed; inset:0; z-index:9999;
+  background:var(--mg-black);
+  display:flex; align-items:center; justify-content:center;
+  animation: mgLoaderHide 1.4s ease forwards;
+  animation-delay:0.35s;
+}
+.mg-loader-mark{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:2.4rem;
+  letter-spacing:0.14em;
+  color:var(--mg-gold);
+  opacity:0;
+  animation: mgMarkFade 0.6s ease forwards 0.1s;
+}
+@keyframes mgMarkFade{ to{ opacity:1; } }
+@keyframes mgLoaderHide{
+  0%{opacity:1; visibility:visible;}
+  85%{opacity:0; visibility:visible;}
+  100%{opacity:0; visibility:hidden; pointer-events:none;}
+}
+
+/* ---------------- Reveal-on-scroll ---------------- */
+[data-reveal]{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .8s var(--mg-ease), transform .8s var(--mg-ease);
+}
+[data-reveal].mg-visible{opacity:1; transform:translateY(0);}
+[data-reveal-delay="1"]{transition-delay:.12s;}
+[data-reveal-delay="2"]{transition-delay:.24s;}
+[data-reveal-delay="3"]{transition-delay:.36s;}
+
+/* ---------------- Eyebrow / section heads ---------------- */
+.mg-eyebrow{
+  display:flex; align-items:center; gap:.6rem;
+  font-family:'Manrope', sans-serif;
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--mg-gold-deep);
+  margin-bottom:1rem;
+}
+.mg-eyebrow-center{justify-content:center;}
+.mg-eyebrow-line{width:28px; height:1px; background:var(--mg-gold);}
+
+.mg-section-head{margin-bottom:2.6rem; max-width:640px;}
+.mg-section-title{
+  font-size:clamp(1.9rem, 3.2vw, 2.8rem);
+  font-weight:450;
+  line-height:1.08;
+  letter-spacing:-0.01em;
+}
+.mg-section-title-left{text-align:left;}
+.mg-section-note{margin-top:.9rem; color:rgba(20,18,15,0.62); font-size:1rem; max-width:520px;}
+
+.mg-section{padding:5.5rem 0;}
+.mg-section-tint{background:var(--mg-ivory-2);}
+@media (max-width:767.98px){ .mg-section{padding:3.4rem 0;} }
+
+/* ============================= HEADER ============================= */
+.mg-header{
+  position:sticky; top:0; z-index:1000;
+  background:rgba(20,18,15,0.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(201,163,68,0.18);
+}
+.mg-navbar{padding:.7rem 0;}
+.mg-brand{display:flex; align-items:center; gap:.65rem;}
+.mg-brand-logo{width:42px; height:42px; border-radius:50%; object-fit:cover; box-shadow:0 0 0 1px rgba(201,163,68,0.5);}
+.mg-brand-text{
+  font-family:'Fraunces', serif;
+  font-size:1.05rem;
+  letter-spacing:.05em;
+  color:var(--mg-ivory);
+  line-height:1;
+  display:flex; flex-direction:column;
+}
+.mg-brand-sub{
+  font-family:'Manrope', sans-serif;
+  font-size:.58rem;
+  letter-spacing:.32em;
+  color:var(--mg-gold);
+  margin-top:.28rem;
+  font-weight:700;
+}
+.mg-nav-links .nav-link{
+  color:var(--mg-ivory);
+  font-size:.86rem;
+  font-weight:600;
+  letter-spacing:.03em;
+  padding:.5rem 1rem !important;
+  position:relative;
+}
+.mg-nav-links .nav-link::after{
+  content:"";
+  position:absolute; left:1rem; right:1rem; bottom:.2rem;
+  height:1px; background:var(--mg-gold);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .35s var(--mg-ease);
+}
+.mg-nav-links .nav-link:hover::after{transform:scaleX(1);}
+.mg-nav-links .nav-link:hover{color:var(--mg-gold-light);}
+
+.mg-toggler{border:none; padding:.3rem;}
+.mg-toggler:focus{box-shadow:none;}
+.mg-burger{display:flex; flex-direction:column; gap:5px; width:24px;}
+.mg-burger span{display:block; height:2px; background:var(--mg-gold); border-radius:2px; transition:all .3s var(--mg-ease);}
+.mg-toggler[aria-expanded="true"] .mg-burger span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.mg-toggler[aria-expanded="true"] .mg-burger span:nth-child(2){opacity:0;}
+.mg-toggler[aria-expanded="true"] .mg-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* ---------------- Buttons ---------------- */
+.mg-btn-primary{
+  background:var(--mg-gold);
+  color:var(--mg-black);
+  font-weight:700;
+  font-size:.85rem;
+  letter-spacing:.04em;
+  padding:.85rem 1.9rem;
+  border-radius:var(--mg-radius);
+  border:1px solid var(--mg-gold);
+  transition:all .3s var(--mg-ease);
+}
+.mg-btn-primary:hover{background:transparent; color:var(--mg-gold); border-color:var(--mg-gold);}
+.mg-btn-lg{padding:1.05rem 2.6rem; font-size:.95rem;}
+
+.mg-btn-outline{
+  background:transparent;
+  color:var(--mg-ivory);
+  border:1px solid rgba(247,243,236,0.4);
+  font-weight:600;
+  font-size:.85rem;
+  padding:.83rem 1.7rem;
+  border-radius:var(--mg-radius);
+  display:inline-flex; align-items:center; gap:.5rem;
+  transition:all .3s var(--mg-ease);
+}
+.mg-btn-outline:hover{border-color:var(--mg-gold); color:var(--mg-gold-light);}
+
+.mg-btn-whatsapp{
+  background:transparent;
+  border:1px solid var(--mg-gold);
+  color:var(--mg-gold-light);
+  font-size:.8rem;
+  font-weight:700;
+  padding:.55rem 1.15rem;
+  border-radius:var(--mg-radius);
+  display:inline-flex; align-items:center; gap:.45rem;
+  transition:all .3s var(--mg-ease);
+}
+.mg-btn-whatsapp:hover{background:var(--mg-gold); color:var(--mg-black);}
+
+/* ============================= HERO ============================= */
+.mg-hero{
+  position:relative;
+  background:var(--mg-black);
+  color:var(--mg-ivory);
+  padding:5.5rem 0 6rem;
+  overflow:hidden;
+}
+.mg-hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(60% 50% at 85% 10%, rgba(201,163,68,0.14), transparent 60%),
+    radial-gradient(40% 40% at 5% 90%, rgba(201,163,68,0.08), transparent 60%);
+  pointer-events:none;
+}
+.mg-hero-copy{position:relative; z-index:2;}
+.mg-hero .mg-eyebrow{color:var(--mg-gold-light);}
+.mg-hero-headline{
+  font-size:clamp(2.5rem, 5.2vw, 4.1rem);
+  font-weight:450;
+  line-height:1.04;
+  letter-spacing:-0.01em;
+  color:var(--mg-ivory);
+}
+.mg-hero-sub{
+  margin-top:1.4rem;
+  font-size:1.05rem;
+  line-height:1.6;
+  color:var(--mg-text-muted);
+  max-width:440px;
+}
+.mg-hero-ctas{margin-top:2.2rem; display:flex; gap:1rem; flex-wrap:wrap;}
+
+.mg-hero-frame{position:relative; z-index:2;}
+.mg-hero-img{
+  width:100%;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  border-radius:var(--mg-radius);
+  border:1px solid rgba(201,163,68,0.3);
+}
+.mg-hero-badge{
+  position:absolute; left:-1.1rem; bottom:-1.1rem;
+  background:var(--mg-gold);
+  color:var(--mg-black);
+  width:96px; height:96px; border-radius:50%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; line-height:1;
+  box-shadow:0 12px 30px rgba(0,0,0,0.35);
+}
+.mg-hero-badge-top{font-size:.55rem; letter-spacing:.1em; font-weight:700; text-transform:uppercase;}
+.mg-hero-badge-mid{font-family:'Fraunces', serif; font-size:1.7rem; font-weight:600; margin:.1rem 0;}
+.mg-hero-badge-bottom{font-size:.55rem; letter-spacing:.1em; font-weight:700; text-transform:uppercase;}
+
+.mg-hero-thread{
+  position:absolute; left:0; right:0; bottom:0; height:1px;
+  background:linear-gradient(90deg, transparent, var(--mg-gold) 20%, var(--mg-gold) 80%, transparent);
+  opacity:.55;
+}
+
+/* ============================= CATEGORY CARDS ============================= */
+.mg-cat-card{
+  position:relative;
+  display:block;
+  aspect-ratio:3/4;
+  overflow:hidden;
+  border-radius:var(--mg-radius);
+  background:var(--mg-black);
+}
+.mg-cat-card img{
+  width:100%; height:100%; object-fit:cover;
+  transition:transform .7s var(--mg-ease), filter .5s ease;
+  filter:saturate(0.94);
+}
+.mg-cat-card:hover img{transform:scale(1.08);}
+.mg-cat-overlay{
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(20,18,15,0) 40%, rgba(20,18,15,0.88) 100%);
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:1.1rem 1.2rem;
+}
+.mg-cat-name{
+  font-family:'Fraunces', serif;
+  color:var(--mg-ivory);
+  font-size:1.3rem;
+  font-weight:500;
+}
+.mg-cat-explore{
+  margin-top:.3rem;
+  color:var(--mg-gold-light);
+  font-size:.75rem;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  display:flex; align-items:center; gap:.4rem;
+  opacity:0; transform:translateY(6px);
+  transition:all .35s var(--mg-ease);
+}
+.mg-cat-card:hover .mg-cat-explore{opacity:1; transform:translateY(0);}
+
+/* ============================= PRODUCT CARDS ============================= */
+.mg-product-card{
+  background:var(--mg-black);
+  border-radius:var(--mg-radius);
+  overflow:hidden;
+  height:100%;
+  border:1px solid rgba(201,163,68,0.14);
+  transition:transform .4s var(--mg-ease), box-shadow .4s var(--mg-ease);
+}
+.mg-product-card:hover{transform:translateY(-6px); box-shadow:0 18px 40px rgba(20,18,15,0.18);}
+.mg-product-media{aspect-ratio:1/1.05; overflow:hidden; position:relative;}
+.mg-product-media img{width:100%; height:100%; object-fit:cover; transition:transform .7s var(--mg-ease);}
+.mg-product-card:hover .mg-product-media img{transform:scale(1.07);}
+.mg-product-cat{
+  position:absolute; top:.85rem; left:.85rem;
+  background:rgba(20,18,15,0.72);
+  color:var(--mg-gold-light);
+  font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  padding:.32rem .65rem;
+  border:1px solid rgba(201,163,68,0.35);
+  border-radius:var(--mg-radius);
+}
+.mg-product-body{padding:1.2rem 1.3rem 1.4rem;}
+.mg-product-name{
+  font-family:'Fraunces', serif;
+  color:var(--mg-ivory);
+  font-size:1.15rem;
+  margin-bottom:.9rem;
+}
+.mg-product-enquire{
+  display:inline-flex; align-items:center; gap:.5rem;
+  color:var(--mg-black);
+  background:var(--mg-gold);
+  font-size:.78rem; font-weight:700;
+  padding:.6rem 1rem;
+  border-radius:var(--mg-radius);
+  width:100%; justify-content:center;
+  transition:all .3s var(--mg-ease);
+}
+.mg-product-enquire:hover{background:var(--mg-gold-light);}
+
+/* ============================= ABOUT ============================= */
+.mg-about-frame img{
+  aspect-ratio:4/5; object-fit:cover; border-radius:var(--mg-radius);
+  border:1px solid var(--mg-line);
+}
+.mg-about-text{font-size:1.08rem; line-height:1.75; color:rgba(20,18,15,0.75); max-width:560px;}
+
+/* ============================= BENEFITS ============================= */
+.mg-benefit{
+  background:var(--mg-ivory);
+  border:1px solid rgba(201,163,68,0.25);
+  border-radius:var(--mg-radius);
+  padding:2.1rem 1.7rem;
+  height:100%;
+  transition:border-color .3s ease, transform .3s var(--mg-ease);
+}
+.mg-benefit:hover{border-color:var(--mg-gold); transform:translateY(-4px);}
+.mg-benefit-icon{
+  width:52px; height:52px; border-radius:50%;
+  background:var(--mg-black);
+  color:var(--mg-gold);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.15rem;
+  margin-bottom:1.2rem;
+}
+.mg-benefit-title{font-size:1.12rem; font-weight:500; margin-bottom:.55rem;}
+.mg-benefit-text{color:rgba(20,18,15,0.62); font-size:.95rem; line-height:1.55;}
+
+/* ============================= CTA ============================= */
+.mg-cta{
+  background:var(--mg-black);
+  color:var(--mg-ivory);
+  padding:5.5rem 0;
+  text-align:center;
+  position:relative;
+}
+.mg-cta::before{
+  content:"";
+  position:absolute; inset:0;
+  background:radial-gradient(50% 60% at 50% 0%, rgba(201,163,68,0.12), transparent 70%);
+}
+.mg-cta-title{
+  position:relative; z-index:1;
+  font-size:clamp(1.9rem, 3.6vw, 2.9rem);
+  font-weight:450;
+  max-width:680px; margin:0 auto;
+}
+.mg-cta-text{
+  position:relative; z-index:1;
+  margin:1.1rem auto 2rem; max-width:460px;
+  color:var(--mg-text-muted);
+}
+.mg-cta .btn{position:relative; z-index:1;}
+
+/* ============================= CONTACT ============================= */
+.mg-contact-card{
+  display:flex; flex-direction:column; align-items:flex-start; gap:.5rem;
+  background:var(--mg-ivory-2);
+  border:1px solid rgba(201,163,68,0.28);
+  border-radius:var(--mg-radius);
+  padding:1.7rem 1.4rem;
+  height:100%;
+  transition:all .3s var(--mg-ease);
+}
+.mg-contact-card:hover{background:var(--mg-black); border-color:var(--mg-gold);}
+.mg-contact-card:hover .mg-contact-label,
+.mg-contact-card:hover .mg-contact-value{color:var(--mg-ivory);}
+.mg-contact-card:hover i{color:var(--mg-gold);}
+.mg-contact-card i{font-size:1.35rem; color:var(--mg-gold-deep); transition:color .3s ease;}
+.mg-contact-label{font-size:.7rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(20,18,15,0.5); transition:color .3s ease;}
+.mg-contact-value{font-family:'Fraunces', serif; font-size:1.08rem; color:var(--mg-black); transition:color .3s ease;}
+.mg-contact-static{cursor:default;}
+
+/* ============================= FOOTER ============================= */
+.mg-footer{
+  background:var(--mg-black);
+  color:var(--mg-text-muted);
+  padding:4rem 0 0;
+}
+.mg-footer-brand{margin-bottom:1rem; display:inline-flex;}
+.mg-footer-text{color:var(--mg-text-muted); font-size:.92rem; max-width:280px; line-height:1.6;}
+.mg-footer-heading{
+  font-family:'Manrope', sans-serif;
+  font-size:.75rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--mg-gold-light); font-weight:700; margin-bottom:1.1rem;
+}
+.mg-footer-links{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:.7rem;}
+.mg-footer-links a{color:var(--mg-text-muted); font-size:.92rem; transition:color .25s ease;}
+.mg-footer-links a:hover{color:var(--mg-gold-light);}
+.mg-footer-bottom{
+  border-top:1px solid rgba(201,163,68,0.16);
+  margin-top:3rem;
+  padding:1.4rem 0;
+  text-align:center;
+  font-size:.82rem;
+  color:rgba(247,243,236,0.45);
+}
+
+/* ============================= FLOATING WHATSAPP ============================= */
+.mg-float-whatsapp{
+  position:fixed; right:1.2rem; bottom:1.2rem; z-index:900;
+  width:56px; height:56px; border-radius:50%;
+  background:var(--mg-gold);
+  color:var(--mg-black);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.5rem;
+  box-shadow:0 10px 26px rgba(20,18,15,0.35);
+  transition:transform .3s var(--mg-ease), background .3s ease;
+}
+.mg-float-whatsapp:hover{transform:scale(1.08); background:var(--mg-gold-light);}
+
+/* ============================= RESPONSIVE TWEAKS ============================= */
+@media (max-width:991.98px){
+  .mg-nav-links{background:var(--mg-black); margin-top:1rem; padding:1rem 0; border-top:1px solid rgba(201,163,68,0.18);}
+  .mg-nav-links .nav-item{width:100%;}
+  .mg-nav-links .nav-link::after{display:none;}
+  .mg-nav-links li.ms-lg-3{margin-top:.6rem; padding:0 .2rem;}
+  .mg-btn-whatsapp{width:100%; justify-content:center;}
+}
+@media (max-width:575.98px){
+  .mg-hero{padding:3.2rem 0 4rem;}
+  .mg-hero-badge{width:80px; height:80px; left:-.6rem; bottom:-.6rem;}
+  .mg-hero-badge-mid{font-size:1.35rem;}
+}
